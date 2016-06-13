@@ -23,15 +23,15 @@ import org.htmlparser.tags.InputTag;
 import org.htmlparser.tags.LinkTag;
 import org.htmlparser.util.NodeList;
 
-//Õâ¸ö¿ÉÒÔÍêÈ«·ÂÕÕjdµÄÊÔÒ»ÊÔ
-//ºóÆÚÓ¦¸Ã¾ßÓĞÍêÉÆµÄ´íÎó¿ØÖÆ»úÖÆ
-//ËÕÄşµÄdelcartÅĞ¶Ï»¹ĞèÒªÍêÉÆ
+//è¿™ä¸ªå¯ä»¥å®Œå…¨ä»¿ç…§jdçš„è¯•ä¸€è¯•
+//åæœŸåº”è¯¥å…·æœ‰å®Œå–„çš„é”™è¯¯æ§åˆ¶æœºåˆ¶
+//è‹å®çš„delcartåˆ¤æ–­è¿˜éœ€è¦å®Œå–„
 public class Sn_simulator extends Config {
 
-	// ³õÊ¼»¯Á¬½Ó×ÊÔ´
+	// åˆå§‹åŒ–è¿æ¥èµ„æº
 	private NetWork mnet;
 	private HashMap<String, String> map;
-	// ÓĞÒ»¸ö×¨ÃÅ¼ÆÊıµÄ±äÁ¿
+	// æœ‰ä¸€ä¸ªä¸“é—¨è®¡æ•°çš„å˜é‡
 	private int cartItem;
 
 	public Sn_simulator() {
@@ -43,16 +43,16 @@ public class Sn_simulator extends Config {
 		mnet.closeAll();
 	}
 
-	// ÓÅ»¯Õû¸ö¹ı³ÌÌØ±ğÖØÒª
-	// ¾ß±¸Ò»¶¨µÄÈİ´íÄÜÁ¦
+	// ä¼˜åŒ–æ•´ä¸ªè¿‡ç¨‹ç‰¹åˆ«é‡è¦
+	// å…·å¤‡ä¸€å®šçš„å®¹é”™èƒ½åŠ›
 	public boolean Sn_login(String uname, String passwd) {
-		// ÏÈ»ñµÃÒ³Ãæ£¬È»ºóÅĞ¶ÏÊÇ·ñĞèÒªÑéÖ¤Âë
+		// å…ˆè·å¾—é¡µé¢ï¼Œç„¶ååˆ¤æ–­æ˜¯å¦éœ€è¦éªŒè¯ç 
 		System.out.println("sn begin to login");
 		try {
 			String url = "https://passport.suning.com/ids/login";
 			String uuid = "";
 			String verifyCode = "";
-			// Ô¤ÏÈ×¼±¸ºÃĞèÒªpostµÄÊı¾İ
+			// é¢„å…ˆå‡†å¤‡å¥½éœ€è¦postçš„æ•°æ®
 			List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 			nvps.add(new BasicNameValuePair("jsonViewType", "true"));
 			nvps.add(new BasicNameValuePair("username", uname));
@@ -73,8 +73,8 @@ public class Sn_simulator extends Config {
 					return true;
 				} else if (content1.contains("\"needVerifyCode\":true")) {
 					// System.out.println("yes here!");
-					// ¿´À´ĞèÒªÊäÈëÑéÖ¤Âë
-					// Ê×ÏÈÒªÖØĞÂ»ñµÃÒ³ÃæµÄÄÚÈİÅ¶!
+					// çœ‹æ¥éœ€è¦è¾“å…¥éªŒè¯ç 
+					// é¦–å…ˆè¦é‡æ–°è·å¾—é¡µé¢çš„å†…å®¹å“¦!
 					HttpGet hg1 = new HttpGet(url);
 					Response resp2 = mnet.execGet(hg1);
 					if (resp2.getState() == 0
@@ -88,9 +88,9 @@ public class Sn_simulator extends Config {
 						System.out.println(uuid);
 						String src = "https://vcs.suning.com/vcs/imageCode.htm?uuid="
 								+ uuid + "&yys=" + (new Date()).getTime();
-						System.out.println("ĞèÒªÊäÈëÑéÖ¤Âë");
+						System.out.println("éœ€è¦è¾“å…¥éªŒè¯ç ");
 						// System.out.println(src);
-						VFrame vf1 = new VFrame(mnet, "sn", src, "ÑéÖ¤Âë");
+						VFrame vf1 = new VFrame(mnet, "sn", src, "éªŒè¯ç ");
 						verifyCode = vf1.getText();
 						// verifyCode=Tool.getScan().next();
 						NameValuePair bp1 = new BasicNameValuePair(
@@ -110,14 +110,14 @@ public class Sn_simulator extends Config {
 								System.out.println("login success!");
 								return true;
 							} else {
-								// Èç¹ûÑéÖ¤ÂëÓĞÎÊÌâ
+								// å¦‚æœéªŒè¯ç æœ‰é—®é¢˜
 								while (content3.contains("badVerifyCode")) {
-									// Ë¢ĞÂÒ»ÏÂä¯ÀÀÆ÷£¬ÖØĞÂ»ñµÃÒ»¸öÑéÖ¤Âë
-									System.out.println("ÑéÖ¤Âë´íÎó");
-									// System.out.println("ÇëÖØĞÂË¢ĞÂÑéÖ¤Âë!(Ë¢ĞÂä¯ÀÀÆ÷)");
+									// åˆ·æ–°ä¸€ä¸‹æµè§ˆå™¨ï¼Œé‡æ–°è·å¾—ä¸€ä¸ªéªŒè¯ç 
+									System.out.println("éªŒè¯ç é”™è¯¯");
+									// System.out.println("è¯·é‡æ–°åˆ·æ–°éªŒè¯ç !(åˆ·æ–°æµè§ˆå™¨)");
 									// verifyCode=Tool.getScan().next();
 									VFrame vf2 = new VFrame(mnet, "sn", src,
-											"ÑéÖ¤Âë´íÎó");
+											"éªŒè¯ç é”™è¯¯");
 									verifyCode = vf2.getText();
 									nvps.remove(bp1);
 									bp1 = new BasicNameValuePair("verifyCode",
@@ -137,7 +137,7 @@ public class Sn_simulator extends Config {
 											return true;
 										}
 									} else {
-										System.out.println("×´Ì¬Òì³£!");
+										System.out.println("çŠ¶æ€å¼‚å¸¸!");
 										break;
 									}
 								}
@@ -157,12 +157,12 @@ public class Sn_simulator extends Config {
 	}
 
 	//
-	// Ä¿Ç°Ò²Ö»ÊÇÖ§³Ö×Ô¼Ò¾­ÓªµÄÇé¿ö
+	// ç›®å‰ä¹Ÿåªæ˜¯æ”¯æŒè‡ªå®¶ç»è¥çš„æƒ…å†µ
 	public Result getCart() {
 		System.out.println("sn begin to get cart");
 		Result result = new Result();
 		// mnet.printAllCookie();
-		// Õâ¸öÓ¦¸ÃÊÇÎªÁË»ñµÃcookie
+		// è¿™ä¸ªåº”è¯¥æ˜¯ä¸ºäº†è·å¾—cookie
 		String url1 = "http://cart.suning.com/webapp/wcs/stores/servlet/OrderItemDisplay?langId=-7&storeId=10052&catalogId=10051";
 		String url2 = "http://cart.suning.com/webapp/wcs/stores/servlet/getMyCartItems?langId=-7&storeId=10052&catalogId=10051";
 		HttpGet hg1 = new HttpGet(url1);
@@ -171,9 +171,9 @@ public class Sn_simulator extends Config {
 			Response resp1 = mnet.execGet(hg1);
 			if (resp1.getState() == 0
 					&& resp1.getResp().getStatusLine().getStatusCode() == 200) {
-				System.out.println("³É¹¦»ñµÃ¹ºÎï³µÒ³Ãæ1");
+				System.out.println("æˆåŠŸè·å¾—è´­ç‰©è½¦é¡µé¢1");
 				// System.out.println(content1);
-				System.out.println("¿ªÊ¼»ñµÃ¹ºÎï³µÒ³Ãæ2..");
+				System.out.println("å¼€å§‹è·å¾—è´­ç‰©è½¦é¡µé¢2..");
 				hg2.setHeader("Accept", "text/html, */*; q=0.01");
 				hg2.setHeader("Accept-Encoding", "gzip, deflate, sdch");
 				hg2.setHeader("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6");
@@ -198,11 +198,11 @@ public class Sn_simulator extends Config {
 				if (resp2.getState() == 0
 						&& resp2.getResp().getStatusLine().getStatusCode() == 200) {
 					map.clear();
-					System.out.println("³É¹¦»ñµÃ¹ºÎï³µÒ³Ãæ2");
+					System.out.println("æˆåŠŸè·å¾—è´­ç‰©è½¦é¡µé¢2");
 					String content2 = resp2.getContent();
 					// System.out.println(content2);
-					// ĞèÒª´æ´¢productIdºÍ¶ÔÓ¦µÄitemId
-					// Õâ¸öĞèÒª´æ´¢ºÃ
+					// éœ€è¦å­˜å‚¨productIdå’Œå¯¹åº”çš„itemId
+					// è¿™ä¸ªéœ€è¦å­˜å‚¨å¥½
 					Parser parser = new Parser(content2);
 					NodeFilter ft1 = new TagNameFilter("div");
 					NodeList nl1 = parser.extractAllNodesThatMatch(ft1);
@@ -215,7 +215,7 @@ public class Sn_simulator extends Config {
 						}
 					}
 					for (int i = 0; i < nl2.size(); i++) {
-						// Õë¶ÔÄ³¸ö¾ßÌåµÄdiv£¬·ÖÎöÆäproductIdºÍitemId,È»ºó´æ´¢ÆğÀ´
+						// é’ˆå¯¹æŸä¸ªå…·ä½“çš„divï¼Œåˆ†æå…¶productIdå’ŒitemId,ç„¶åå­˜å‚¨èµ·æ¥
 						Div dt = (Div) nl2.elementAt(i);
 						parser = new Parser(dt.toHtml());
 						NodeFilter ft6 = new HasAttributeFilter("name",
@@ -232,7 +232,7 @@ public class Sn_simulator extends Config {
 						// System.out.println(id);
 						// itemId
 						parser = new Parser(dt.toHtml());
-						NodeFilter ft7 = new HasAttributeFilter("title", "É¾³ı");
+						NodeFilter ft7 = new HasAttributeFilter("title", "åˆ é™¤");
 						NodeList nl4 = parser.extractAllNodesThatMatch(ft7);
 						LinkTag lt = (LinkTag) nl4.elementAt(0);
 						String cid = lt.getAttribute("onClick");
@@ -242,13 +242,13 @@ public class Sn_simulator extends Config {
 					}
 					System.out
 							.println("there are " + map.size() + " products!");
-					//Êä³ömapÄÚÈİ½øĞĞ²âÊÔ
+					//è¾“å‡ºmapå†…å®¹è¿›è¡Œæµ‹è¯•
 //					Iterator iterator = map.entrySet().iterator();
 //					while(iterator.hasNext()){
 //						Entry	entry = (Entry)iterator.next();
 //						System.out.println(entry.getKey()+" "+entry.getValue());
 //					}
-					// Ö»Òª±£Ö¤¹ºÎï³µÖĞÖÁÉÙÓĞÒ»¼şÉÌÆ·£¬ÄÇÃ´¾Í¿ÉÒÔ±£Ö¤Æä³É¹¦ĞÔ
+					// åªè¦ä¿è¯è´­ç‰©è½¦ä¸­è‡³å°‘æœ‰ä¸€ä»¶å•†å“ï¼Œé‚£ä¹ˆå°±å¯ä»¥ä¿è¯å…¶æˆåŠŸæ€§
 					if (map.size() > 0) {
 						System.out.println("get cart success");
 						this.cartItem = map.size();
@@ -269,10 +269,10 @@ public class Sn_simulator extends Config {
 		return result;
 	}
 
-	// Òª×öµÄ¾¡Á¿ÊÊÓ¦¶àµÄÉÌÆ·,¾¡Á¿ÒªÍêÃÀ
+	// è¦åšçš„å°½é‡é€‚åº”å¤šçš„å•†å“,å°½é‡è¦å®Œç¾
 	public Result addCart(String curl) {
 		System.out.println("sn begin to add cart");
-		// ÏÖÔÚÉÌÆ·Ò³Ãæ»ñµÃÒ»Ğ©»ù±¾ĞÅÏ¢
+		// ç°åœ¨å•†å“é¡µé¢è·å¾—ä¸€äº›åŸºæœ¬ä¿¡æ¯
 		Result result = new Result();
 		result.extype = "addcart";// 1
 		result.shop = "sn";// 2
@@ -286,8 +286,8 @@ public class Sn_simulator extends Config {
 					&& resp1.getResp().getStatusLine().getStatusCode() == 200) {
 				content1 = resp1.getContent();
 			}
-			// Ö±½ÓµÃ³ösnËÆºõ²¢²»ºÏÀí,ËùÒÔÖ»ÄÜ
-			// ÓĞĞ©¶«Î÷ĞèÒªÁíÍâ·¢ËÍÇëÇó²ÅÄÜ¹»»ñµÃ
+			// ç›´æ¥å¾—å‡ºsnä¼¼ä¹å¹¶ä¸åˆç†,æ‰€ä»¥åªèƒ½
+			// æœ‰äº›ä¸œè¥¿éœ€è¦å¦å¤–å‘é€è¯·æ±‚æ‰èƒ½å¤Ÿè·å¾—
 			String partnumber = Tool.getValByPattern(content1,
 					"(?<=\"partNumber\":\")\\d+");
 			// mnet.printAllCookie();
@@ -313,7 +313,7 @@ public class Sn_simulator extends Config {
 						"(?<=\"vendorCode\":\")\\d+");
 			}
 			String sellType = "";
-			// Õâ¸ö»¹±ØĞë»»¸ö·½Ê½»ñµÃ
+			// è¿™ä¸ªè¿˜å¿…é¡»æ¢ä¸ªæ–¹å¼è·å¾—
 			Parser ps1 = new Parser(content1);
 			NodeFilter nf1 = new TagNameFilter("input");
 			NodeFilter nf2 = new HasAttributeFilter("id", "sellType");
@@ -322,7 +322,7 @@ public class Sn_simulator extends Config {
 			InputTag it1 = (InputTag) nl.elementAt(0);
 			sellType = it1.getAttribute("value");
 			/**
-			 * ÕâÀïµÄpromotionActiveIdÊÇ¸öXÒòËØ£¬ÓĞĞ©ÉÌÆ·µ±Õâ¸ö ²ÎÊıÃ»ÓĞÖµµÄÊ±ºòÊÇÌí¼Ó²»³É¹¦µÄ£¡£¡£¡
+			 * è¿™é‡Œçš„promotionActiveIdæ˜¯ä¸ªXå› ç´ ï¼Œæœ‰äº›å•†å“å½“è¿™ä¸ª å‚æ•°æ²¡æœ‰å€¼çš„æ—¶å€™æ˜¯æ·»åŠ ä¸æˆåŠŸçš„ï¼ï¼ï¼
 			 * */
 			String promotionActiveId = "";
 			String url = "http://cart.suning.com/emall/addMiniSoppingCart?"
@@ -368,7 +368,7 @@ public class Sn_simulator extends Config {
 		return result;
 	}
 
-	// ÈçºÎÅĞ¶Ïdel cartÒÑ¾­³É¹¦ÁËÄØ
+	// å¦‚ä½•åˆ¤æ–­del cartå·²ç»æˆåŠŸäº†å‘¢
 	public Result delCart(String curl) {
 		System.out.println("sn begin to del cart");
 		int lastItem = this.cartItem;
@@ -433,14 +433,14 @@ public class Sn_simulator extends Config {
 
 	public static void main(String[] args) {
 
-		String uname = "ge-jq@qq.com";
-		String passwd = "123456..abc";
+		String uname = "*****";
+		String passwd = "*****";
 		Sn_simulator sns = new Sn_simulator();
 		sns.setVpn(Result.vpn);
 		String ip=Result.vpn.split("\\+")[1];
 		Log.getDateTime("Begin_time:");
 		Log.recordLogFile("\t\t"+Result.vpc+"\t"+new Ping().doPing(ip, 3)+"\n");
-		// ×î¿ªÊ¼²»ĞèÒªµÇÂ½
+		// æœ€å¼€å§‹ä¸éœ€è¦ç™»é™†
 		sns.Sn_login(uname, passwd);
 		Result result = null;
 		result = sns.getCart();
@@ -456,7 +456,7 @@ public class Sn_simulator extends Config {
 		System.out.println(result);
 		System.out.println("----------------------");
 		
-		//delcartÖ®Ç°±ØĞëÏÈgetcart
+		//delcartä¹‹å‰å¿…é¡»å…ˆgetcart
 		result = sns.getCart();
 		Log.recordLogFile("\t\t"+result.toString()+"\n");
 		System.out.println("----------------------");
