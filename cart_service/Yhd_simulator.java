@@ -96,7 +96,7 @@ public class Yhd_simulator extends Config{
 	    			System.out.println("login sucess");
 	    			return true;
 	    		}
-	    		//ĞèÒªÈ·ÈÏÊÇ·ñÊÇneedVerifyCode
+	    		//éœ€è¦ç¡®è®¤æ˜¯å¦æ˜¯needVerifyCode
 	    		else if(content1.contains("\"errorCode\":30")){
 	    			//System.out.println("here");
 	    			String url_vfc = "https://captcha.yhd.com/public/getjpg.do?sig="+sig;
@@ -104,9 +104,9 @@ public class Yhd_simulator extends Config{
 	    			HttpGet hg1=new HttpGet(url_vfc);
 	    			Response resp2=mnet.execGet(hg1);
 	    			if(resp2.getState()==0&&resp2.getResp().getStatusLine().getStatusCode()==200){
-	    				System.out.println("ĞèÒªÊäÈëÑéÖ¤Âë");
+	    				System.out.println("éœ€è¦è¾“å…¥éªŒè¯ç ");
 	    				//System.out.println(src);
-	                    VFrame vf1=new VFrame(mnet,"sn",url_vfc,"ÑéÖ¤Âë");
+	                    VFrame vf1=new VFrame(mnet,"sn",url_vfc,"éªŒè¯ç ");
 	   				    verifyCode = vf1.getText();
 	    				//verifyCode=Tool.getScan().next();
 	    				NameValuePair bp1=new BasicNameValuePair("validCode",verifyCode);
@@ -127,14 +127,14 @@ public class Yhd_simulator extends Config{
 	    					}
 	    					else 
 	    					{
-	    						//Èç¹ûÑéÖ¤ÂëÓĞÎÊÌâ
+	    						//å¦‚æœéªŒè¯ç æœ‰é—®é¢˜
 	    						while(content3.contains("\"errorCode\":10"))
 	    						{
-	    							//Ë¢ĞÂÒ»ÏÂä¯ÀÀÆ÷£¬ÖØĞÂ»ñµÃÒ»¸öÑéÖ¤Âë
-	    							System.out.println("ÑéÖ¤Âë´íÎó");
-	    							//System.out.println("ÇëÖØĞÂË¢ĞÂÑéÖ¤Âë!(Ë¢ĞÂä¯ÀÀÆ÷)");
+	    							//åˆ·æ–°ä¸€ä¸‹æµè§ˆå™¨ï¼Œé‡æ–°è·å¾—ä¸€ä¸ªéªŒè¯ç 
+	    							System.out.println("éªŒè¯ç é”™è¯¯");
+	    							//System.out.println("è¯·é‡æ–°åˆ·æ–°éªŒè¯ç !(åˆ·æ–°æµè§ˆå™¨)");
 	    							//verifyCode=Tool.getScan().next();
-	    							VFrame vf2=new VFrame(mnet,"sn",url_vfc,"ÑéÖ¤Âë´íÎó");
+	    							VFrame vf2=new VFrame(mnet,"sn",url_vfc,"éªŒè¯ç é”™è¯¯");
 	    			   				verifyCode = vf2.getText();
 	    							nvps.remove(bp1);
 	    							bp1=new BasicNameValuePair("validCode",verifyCode);
@@ -152,7 +152,7 @@ public class Yhd_simulator extends Config{
 	    		    					}
 	    		    				}
 	    		    				else{
-	    		    					System.out.println("×´Ì¬Òì³£!");
+	    		    					System.out.println("çŠ¶æ€å¼‚å¸¸!");
 	    		    					break;
 	    		    				}
 	    						}
@@ -183,7 +183,7 @@ public class Yhd_simulator extends Config{
 		HttpGet login_hg=new HttpGet(url);
 		Response login_resp=mnet.execGet(login_hg);
 		String login_content=login_resp.getContent();
-		if(login_content.contains("ÇëÁ¢¼´µÇÂ¼²é¿´"))
+		if(login_content.contains("è¯·ç«‹å³ç™»å½•æŸ¥çœ‹"))
 			Yhd_login(uname,pwd);*/
 		
 		
@@ -208,7 +208,7 @@ public class Yhd_simulator extends Config{
 				String content1=content.split("\"data\":\"")[1];
 				String content2=content1.split("\",\"msg")[0];
 				//System.out.println(content2);
-				//×Ö·û´®´¦Àí
+				//å­—ç¬¦ä¸²å¤„ç†
 				String []products=content2.split("productId=\\\\\"");
 				String []cartItemVoIDs=content2.split("cartItemVoId=\\\\\"");
 				String []cart2Checkboxs=content2.split("cart2Checkbox\\\\\"");
@@ -255,7 +255,7 @@ public class Yhd_simulator extends Config{
 					map.put(a[i].productId, a[i]);
 				}
 				System.out.println("there are " + map.size() + " products!");
-				//ÖªµÀ¹ºÎï³µ³É¹¦µÄÌõ¼ş¾ÍÊÇÀïÃæÈ·ÊµÓĞÉÌÆ·µÄÊıÄ¿
+				//çŸ¥é“è´­ç‰©è½¦æˆåŠŸçš„æ¡ä»¶å°±æ˜¯é‡Œé¢ç¡®å®æœ‰å•†å“çš„æ•°ç›®
 				if(map.size()>0)
 				{
 					System.out.println("get cart success");
@@ -306,7 +306,7 @@ public class Yhd_simulator extends Config{
 			if (rep.getState()==0&&rep.getResp().getStatusLine().getStatusCode() == 200) {
 				String content=rep.getContent();
 				//System.out.println(content);
-				if(content.contains("²Ù×÷³É¹¦"))
+				if(content.contains("æ“ä½œæˆåŠŸ"))
 				{
 					System.out.println("add success");
 					result.status=0;//8
@@ -368,11 +368,11 @@ public class Yhd_simulator extends Config{
 			{
 				String content=resp2.getContent();
 				//System.out.println(content);
-			    if(content.contains("\"msg\":\"²Ù×÷³É¹¦"))
+			    if(content.contains("\"msg\":\"æ“ä½œæˆåŠŸ"))
 			    {
 			    	map.remove(pid);
 			    	System.out.println("del cart success");
-			    	//½Ó×Å¾ÍÊÇ³É¹¦µÄÊ¤ÀûÏûÏ¢
+			    	//æ¥ç€å°±æ˜¯æˆåŠŸçš„èƒœåˆ©æ¶ˆæ¯
 			    	result.status=0;//8
 			    	result.filesize=resp.getFileSize();//9
 			    	result.duration=resp.getDuration();//10
@@ -395,8 +395,8 @@ public class Yhd_simulator extends Config{
 	
 	
 	public static void main(String []args){
-		String uname="ahzywq@163.com";
-		String pwd="123456";
+		String uname="*****";
+		String pwd="*****";
 		Yhd_simulator yhd=new Yhd_simulator();
 		yhd.setVpn(Result.vpn);
 		//System.out.println(Result.vpn);
