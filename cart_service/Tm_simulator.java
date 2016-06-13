@@ -42,8 +42,8 @@ import org.htmlparser.util.ParserException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.w3c.dom.Entity;
-//tmallËãÊÇ³õ²½Íê³É
-//Õë¶ÔtmµÄÉÌÆ·ĞèÓ´°¡±£´æÒ»Ğ©±ØÒªµÄÏûÏ¢
+//tmallç®—æ˜¯åˆæ­¥å®Œæˆ
+//é’ˆå¯¹tmçš„å•†å“éœ€å“Ÿå•Šä¿å­˜ä¸€äº›å¿…è¦çš„æ¶ˆæ¯
 class Tm_product {
 	public String shopId;
 	public String comboId;
@@ -59,7 +59,7 @@ class Tm_product {
 		shopId = "";
 		comboId = "0";
 		shopActId = "0";
-		//Ä¬ÈÏÉÌÆ·ÊıÄ¿ÊÇ1
+		//é»˜è®¤å•†å“æ•°ç›®æ˜¯1
 		quantity = 1;
 		cartId = "";
 		skuId = "";
@@ -78,11 +78,11 @@ class Tm_product {
 }
 
 public class Tm_simulator extends Config{
-    //·â×°½øĞĞÍøÂçµÄÇëÇó
+    //å°è£…è¿›è¡Œç½‘ç»œçš„è¯·æ±‚
 	private NetWork mnet;
-	//_tb_token_µÇÂ½Ê±ºò¾ÍÓ¦¸Ã»ñµÃ
+	//_tb_token_ç™»é™†æ—¶å€™å°±åº”è¯¥è·å¾—
 	private String _tb_token_ ;
-	//Í¨¹ıgetCart»ñµÃÉÌÆ·µÄĞÅÏ¢
+	//é€šè¿‡getCartè·å¾—å•†å“çš„ä¿¡æ¯
 	private Map<String, Tm_product> map;
 
 	public Tm_simulator() {
@@ -154,25 +154,25 @@ public class Tm_simulator extends Config{
 		return nvps;
 	}
 
-	//¹ı³ÌĞèÒªÖØĞÂ¿¼Ö¤
+	//è¿‡ç¨‹éœ€è¦é‡æ–°è€ƒè¯
     public boolean Tm_login(String uname, String passwd)
     {
     	try{
-    	  //Ê×ÏÈÊÇ¶¨ÒåÒ»ÏÂpostÉÏÈ¥µÄ²ÎÊı
+    	  //é¦–å…ˆæ˜¯å®šä¹‰ä¸€ä¸‹postä¸Šå»çš„å‚æ•°
     	  System.out.println("begin the tmall login");
     	  List<NameValuePair> nvps=getLoginParam("");
-    	  //Æä´ÎÊÇpost±¾Éí
+    	  //å…¶æ¬¡æ˜¯postæœ¬èº«
     	  HttpPost hp=getLoginPost();
     	  hp.setEntity(new UrlEncodedFormEntity(nvps));
     	  Response resp=mnet.execPost(hp);
     	  if(resp.getState()==0&&resp.getResp().getStatusLine().getStatusCode()==200)
     	  {
-    		  //µÃµ½ÁËµÚÒ»´Î·µ»ØµÄ½á¹û
+    		  //å¾—åˆ°äº†ç¬¬ä¸€æ¬¡è¿”å›çš„ç»“æœ
     		  String content = resp.getContent();
-    		  //·ÖÎö½á¹û¿´ÊÇ·ñĞèÒªÑéÖ¤ÂëµÈÎÊÌâ
-    		  if (content.contains("ÇëÊäÈëÑéÖ¤Âë")) 
+    		  //åˆ†æç»“æœçœ‹æ˜¯å¦éœ€è¦éªŒè¯ç ç­‰é—®é¢˜
+    		  if (content.contains("è¯·è¾“å…¥éªŒè¯ç ")) 
     		  {
-				 System.out.println("ĞèÒªÊäÈëÑéÖ¤Âë");
+				 System.out.println("éœ€è¦è¾“å…¥éªŒè¯ç ");
 				 Parser ps = new Parser(content);
 				 NodeFilter nf1 = new TagNameFilter("img");
 				 NodeFilter nf2 = new HasAttributeFilter("id","J_StandardCode_m");
@@ -181,10 +181,10 @@ public class Tm_simulator extends Config{
 				 ImageTag it = (ImageTag) nl1.elementAt(0);
 				 // System.out.println(it.getAttribute("data-src"));
 				 String url=it.getAttribute("data-src");
-				 //ÖØĞÂĞŞ¸ÄÁËÑéÖ¤ÂëµÄÇé¿ö
-				 VFrame vf1=new VFrame(mnet,"tm",url,"ÑéÖ¤Âë");
+				 //é‡æ–°ä¿®æ”¹äº†éªŒè¯ç çš„æƒ…å†µ
+				 VFrame vf1=new VFrame(mnet,"tm",url,"éªŒè¯ç ");
 				 String chkcode = vf1.getText();
-				 //ÖØĞÂ³õÊ¼»¯postÇëÇóµÄÇé¿ö
+				 //é‡æ–°åˆå§‹åŒ–postè¯·æ±‚çš„æƒ…å†µ
 				 nvps=getLoginParam(chkcode);
 				 hp=getLoginPost();
 		    	 hp.setEntity(new UrlEncodedFormEntity(nvps));
@@ -193,18 +193,18 @@ public class Tm_simulator extends Config{
 				 {	
 					 content=resp.getContent();
 					 System.out.println(content);
-					if(!content.contains("ÑéÖ¤Âë´íÎó"))
+					if(!content.contains("éªŒè¯ç é”™è¯¯"))
 					{
 						_tb_token_=Tool.getValByPattern(content,"(?<=_tb_token_=)\\w+");
 						System.out.println("tmall login success!");
 						return true;
 					}
 					else{
-						while(content.contains("ÑéÖ¤Âë´íÎó"))
+						while(content.contains("éªŒè¯ç é”™è¯¯"))
 						{
-							System.out.println("ÑéÖ¤ÂëÊäÈë´íÎó");
-							//System.out.println("ÇëÊäÈëÑéÖ¤Âë:");
-							VFrame vf2=new VFrame(mnet,"tm",url,"ÑéÖ¤Âë´íÎó");
+							System.out.println("éªŒè¯ç è¾“å…¥é”™è¯¯");
+							//System.out.println("è¯·è¾“å…¥éªŒè¯ç :");
+							VFrame vf2=new VFrame(mnet,"tm",url,"éªŒè¯ç é”™è¯¯");
 							chkcode = vf2.getText();
 							//chkcode = Tool.getScan().next();
 							nvps=getLoginParam(chkcode);
@@ -214,7 +214,7 @@ public class Tm_simulator extends Config{
 					    	if(resp.getState()==0&&resp.getResp().getStatusLine().getStatusCode()==200)
 					    	{
 					    		content=resp.getContent();
-					    		if(!content.contains("ÑéÖ¤Âë´íÎó"))
+					    		if(!content.contains("éªŒè¯ç é”™è¯¯"))
 					    		{
 					    			System.out.println("tmall login success!");
 					    			_tb_token_=Tool.getValByPattern(content,"(?<=_tb_token_=)\\w+");
@@ -246,7 +246,7 @@ public class Tm_simulator extends Config{
     	return false;
     }
 
-	// ÔÚÉ¾³ı¹ºÎï³µÖĞµÄÎïÆ·Ç°ĞèÒªÏÈ·ÃÎÊÒ»´Î¹ºÎï³µ£¬ÕâÑù¿ÉÒÔÒ»Ğ©±ØÒªµÄĞÅÏ¢
+	// åœ¨åˆ é™¤è´­ç‰©è½¦ä¸­çš„ç‰©å“å‰éœ€è¦å…ˆè®¿é—®ä¸€æ¬¡è´­ç‰©è½¦ï¼Œè¿™æ ·å¯ä»¥ä¸€äº›å¿…è¦çš„ä¿¡æ¯
 	public Result getCart() {
 		System.out.println("tmall begin to get cart");
 		Result result=new Result();
@@ -263,7 +263,7 @@ public class Tm_simulator extends Config{
 			if (resp.getState() == 0) {
 				if (resp.getResp().getStatusLine().getStatusCode() == 200) {
 					String content = resp.getContent();
-					// »ñµÃÏàÓ¦µÄtokenµÄÈ¡Öµ
+					// è·å¾—ç›¸åº”çš„tokençš„å–å€¼
 					Parser token_ps = new Parser(content);
 					NodeFilter token_ft1 = new TagNameFilter("input");
 					NodeFilter token_ft2 = new HasAttributeFilter("id","_tb_token_");
@@ -271,26 +271,26 @@ public class Tm_simulator extends Config{
 					NodeList token_nl = token_ps.extractAllNodesThatMatch(token_ft3);
 					InputTag token_it = (InputTag) token_nl.elementAt(0);
 					_tb_token_ = token_it.getAttribute("value");
-					// »ñµÃfirstDataµÄÏàÓ¦Êı¾İ
-					// ĞèÒªÉú³ÉºÜ¶àÏàÓ¦µÄÊı¾İ
+					// è·å¾—firstDataçš„ç›¸åº”æ•°æ®
+					// éœ€è¦ç”Ÿæˆå¾ˆå¤šç›¸åº”çš„æ•°æ®
 					String firstData = "";
 					Pattern pn = Pattern.compile("(?<=firstData =).*(?=catch)");
 					Matcher mc = pn.matcher(content);
 					if (mc.find())
 						firstData = content.substring(mc.start(), mc.end());
-					//°ÑÍøÒ³ÖĞ·½·Å»ØÀ´µÄjsonÊı¾İ½øĞĞ·ÖÎö
+					//æŠŠç½‘é¡µä¸­æ–¹æ”¾å›æ¥çš„jsonæ•°æ®è¿›è¡Œåˆ†æ
 					JSONObject jo = new JSONObject(firstData);
 					String list = jo.getString("list");
 					JSONArray ja = new JSONArray(list);
-					// ¹ºÎï³µÖĞµÄµêÆÌµÄ¸öÊı
+					// è´­ç‰©è½¦ä¸­çš„åº—é“ºçš„ä¸ªæ•°
 					int shopSize = ja.length();
 					for (int i = 0; i < shopSize; i++) {
-						// ½ÓÏÂÀ´¿´Ã¿¸öshopÖĞµÄitemµÄÇé¿ö
-						// ËÆºõ²¢ÓÃ²»ÉÏÕâ¸ö¹¤¾ßÅ¶
+						// æ¥ä¸‹æ¥çœ‹æ¯ä¸ªshopä¸­çš„itemçš„æƒ…å†µ
+						// ä¼¼ä¹å¹¶ç”¨ä¸ä¸Šè¿™ä¸ªå·¥å…·å“¦
 						JSONObject jjt = ja.getJSONObject(i);
 						String shopId = jjt.getString("id");
 						String listi = ja.getString(i);
-						// È»ºó»ñµÃitemsËùÔÚµÄstring£¬ÕâÑù·½±ã·ÖÎö
+						// ç„¶åè·å¾—itemsæ‰€åœ¨çš„stringï¼Œè¿™æ ·æ–¹ä¾¿åˆ†æ
 						String itemss = new JSONObject(listi).getString("bundles");
 						JSONArray bundles_array = new JSONArray(itemss);
 						String bundles_value = bundles_array.getString(0);
@@ -299,7 +299,7 @@ public class Tm_simulator extends Config{
 
 						JSONArray jas = new JSONArray(items_str);
 						int itemsize = jas.length();
-						// Õâ¸öÊÇÕë¶ÔÃ¿¸öµêÆÌµÄÉÌÆ·Í³¼Æ
+						// è¿™ä¸ªæ˜¯é’ˆå¯¹æ¯ä¸ªåº—é“ºçš„å•†å“ç»Ÿè®¡
 						for (int j = 0; j < itemsize; j++) {
 							JSONObject jjjt = jas.getJSONObject(j);
 							String cartId = jjjt.getString("cartId");
@@ -342,7 +342,7 @@ public class Tm_simulator extends Config{
 	}
     
 	
-	// ¼ÙÉè¸ù¾İÉÌÆ·µÄurlÀ´Ìí¼Ó,ÕâÑùÊµÔÚ²»ĞĞ»¹ÄÜ»ñµÃÒ³Ãæ
+	// å‡è®¾æ ¹æ®å•†å“çš„urlæ¥æ·»åŠ ,è¿™æ ·å®åœ¨ä¸è¡Œè¿˜èƒ½è·å¾—é¡µé¢
 	public Result addCart(String url) {
 		//getPage("https://gm.mmstat.com/tmalljy.1.1?shopid=58613162&itemid=520504424524&pos=detailclickadd&rn=f924083f6270ac1b67c60360a610f150&catid=1512&itemId=520504424524&pagetype=item&sellerId=268451883&_tm_cache=1440337422382");
 		//getPage("https://gm.mmstat.com/tmalljy.3.1?action=detail_cartclick&userType=4&rn=f924083f6270ac1b67c60360a610f150&catid=1512&itemId=520504424524&pagetype=item&sellerId=268451883&_tm_cache=1440337422384");
@@ -362,17 +362,17 @@ public class Tm_simulator extends Config{
 		if (resp.getState() == 0) {
 			if (resp.getResp().getStatusLine().getStatusCode() == 200) {
 				try {
-					//³ÌĞòÖ»ÓĞÔËĞĞµ½ÕâÀï²ÅËãÔËĞĞ³É¹¦
+					//ç¨‹åºåªæœ‰è¿è¡Œåˆ°è¿™é‡Œæ‰ç®—è¿è¡ŒæˆåŠŸ
 					String content = resp.getContent();
 					Pattern pa = null;
-					//»¹ÊÇÏÈÓÃÀ´»ñµÃÒ»Ğ©ÆäËû·½ÃæµÄĞÅÏ¢±È½ÏºÃ
+					//è¿˜æ˜¯å…ˆç”¨æ¥è·å¾—ä¸€äº›å…¶ä»–æ–¹é¢çš„ä¿¡æ¯æ¯”è¾ƒå¥½
 					String _ksTS = String.valueOf(new Date().getTime())+ "_3254";
 					String callback = "jsonp3255";
-					// ½ÓÏÂÀ´ÊÇtsidÒ²¾ÍÊÇcookieÀïÃæµÄt
+					// æ¥ä¸‹æ¥æ˜¯tsidä¹Ÿå°±æ˜¯cookieé‡Œé¢çš„t
 					String tsid = mnet.getCookie("t");
-					// »¹ÊÇÏÈ°ÑjsÕÒ³öÀ´È»ºó±ä»»ºóÔÚÆ¥Åä
+					// è¿˜æ˜¯å…ˆæŠŠjsæ‰¾å‡ºæ¥ç„¶åå˜æ¢ååœ¨åŒ¹é…
 					String xmlc = Tool.getValByPattern(content,"\\{\"api\":.*");
-					// »¹ÊÇÏÈ»ñµÃaddÀïÃæµÄÊı¾İºÃÁË
+					// è¿˜æ˜¯å…ˆè·å¾—addé‡Œé¢çš„æ•°æ®å¥½äº†
 					/*
 					 * add:{"deliveryCityCode":340100,"campaignId":0,"from_etao":
 					 * "","umpkey":"","items":[{"itemId":"520495134793","skuId":
@@ -382,7 +382,7 @@ public class Tm_simulator extends Config{
 					 */
 					String deliveryCityCode = "340100";
 					int campaignId = 0;
-					// Èç¹ûÊÇÀ´Ö®etaoÆäÖµÎª1
+					// å¦‚æœæ˜¯æ¥ä¹‹etaoå…¶å€¼ä¸º1
 					String from_etao = "";
 					String umpkey = "";
 					String items = "";
@@ -409,7 +409,7 @@ public class Tm_simulator extends Config{
 					String item_url_refer = "https%3A%2F%2Flist.tmall.com%2Fsearch_product.htm%3Fq%3D%25CA%25D6%25BB%25FA%26type%3Dp%26spm%3Da220m.1000858.a2227oh.d100%26from%3D.list.pc_1_searchbutton";
 					String ggurl = "https://fbuy.tmall.com/cart/addCartItems.do?";
 					String params = "";
-					// ×é×°gurl
+					// ç»„è£…gurl
 					params += "_tb_token_=" + encode(_tb_token_) + "&";
 					params += "add=" + encode(add) + "&";
 					params += "tsid=" + encode(tsid) + "&";
@@ -470,10 +470,10 @@ public class Tm_simulator extends Config{
 		return "";
 	}
 
-	// ÏÈÍ¨¹ıitemId¿´¿´µ½µ×ÄÜ²»ÄÜÉ¾³ıÄØ
-	// ¿´À´»¹ÊÇcookieµÄÎÊÌâÄØ£¿
+	// å…ˆé€šè¿‡itemIdçœ‹çœ‹åˆ°åº•èƒ½ä¸èƒ½åˆ é™¤å‘¢
+	// çœ‹æ¥è¿˜æ˜¯cookieçš„é—®é¢˜å‘¢ï¼Ÿ
 	public Result delCart(String url) {
-		// ÔÙÉ¾³ı¹ºÎï³µÇ°ÏÈ·ÃÎÊÁ½¸öÒ³Ãæ
+		// å†åˆ é™¤è´­ç‰©è½¦å‰å…ˆè®¿é—®ä¸¤ä¸ªé¡µé¢
 		//String furl1 = "https://go.mmstat.com/tbapp.1002.1.3?t=1440222762557&url=https://cart.taobao.com/cart.htm?spm=a220o.1000855.a2226mz.14.G0qUff&from=btop";
 		//Response fres1 = getPage(furl1);
 		//String furl2 = "https://gm.mmstat.com/tbcart.8.8?cache=1440222762630";
@@ -486,9 +486,9 @@ public class Tm_simulator extends Config{
 		result.filetype="json";//4
 		result.shop="tm";//5
 		String mid = Tool.getValByPattern(url, "(?<=id=)\\d+");
-        //Í¨¹ıid»ñµÃÉÌÆ·µÄÏàÓ¦ĞÅÏ¢
+        //é€šè¿‡idè·å¾—å•†å“çš„ç›¸åº”ä¿¡æ¯
 		Tm_product tp = map.get(mid);
-		// ¹¹½¨Õû¸öpostµÄÊı¾İ
+		// æ„å»ºæ•´ä¸ªpostçš„æ•°æ®
 		String _input_charset = "utf-8";
 		String tk = _tb_token_;
 		String data = "";
@@ -510,14 +510,14 @@ public class Tm_simulator extends Config{
 				+ "\"],\"type\":\"delete\"}]";
 		//System.out.println("data:" + data);
 		String shop_id = "0";
-		// Õâ¸ö¾ÍÏàµ±ÓÚ1970µÄÊ±¼ä
+		// è¿™ä¸ªå°±ç›¸å½“äº1970çš„æ—¶é—´
 		String t = String.valueOf(new Date().getTime());
 		String type = "delete";
 		String page = "1";
 		String _thwlang = "zh_CN";
-		//Í¨¹ıcookie»ñµÃ
+		//é€šè¿‡cookieè·å¾—
 		String ct = mnet.getCookie("t");
-		//¿ªÊ¼×é×°Õû¸öpostÇëÇó
+		//å¼€å§‹ç»„è£…æ•´ä¸ªpostè¯·æ±‚
 		String post_url = "https://cart.taobao.com/json/AsyncUpdateCart.do";
 		HttpPost hp = new HttpPost(post_url);
 		result.url=post_url;//6
@@ -553,7 +553,7 @@ public class Tm_simulator extends Config{
 		hp.setHeader("referer","https://cart.taobao.com/cart.htm?spm=a220o.1000855.a2226mz.14.4o2tk9&from=btop");
 		hp.setHeader("user-agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36");
 		hp.setHeader("x-requested-with", "XMLHttpRequest");
-		// Ë³±ã²é¿´Ò»ÏÂhttpclientµÄheader»úÖÆ
+		// é¡ºä¾¿æŸ¥çœ‹ä¸€ä¸‹httpclientçš„headeræœºåˆ¶
 		result.ctime=new Date().getTime();//7
 		Response resp = mnet.execPost(hp);
 		if (resp.getState() == 0) {
@@ -592,8 +592,8 @@ public class Tm_simulator extends Config{
 	}
     
 	public static void main(String[] args) {
-		String uname = "ge-jq@qq.com";
-		String upass = "123456..abc";
+		String uname = "*****";
+		String upass = "*****";
 		Tm_simulator ts = new Tm_simulator();
 		ts.setVpn(Result.vpn);
 		String ip=Result.vpn.split("\\+")[1];
