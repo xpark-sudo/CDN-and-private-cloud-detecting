@@ -47,14 +47,14 @@ import org.htmlparser.tags.InputTag;
 import org.htmlparser.tags.LinkTag;
 import org.htmlparser.util.NodeList;
 
-//±£´æÉÌÆ·µÄÒ»Ğ©±ØÒªĞÅÏ¢·½±ãÉ¾³ıµÄÊ±ºòÊ¹ÓÃ
+//ä¿å­˜å•†å“çš„ä¸€äº›å¿…è¦ä¿¡æ¯æ–¹ä¾¿åˆ é™¤çš„æ—¶å€™ä½¿ç”¨
 class ProductInfo {
 	public String venderId;
 	public String pid;
 	public String ptype;
 	public String packId;
 	public String targetId;
-	// Ä¬ÈÏÉú³É
+	// é»˜è®¤ç”Ÿæˆ
 	public String outSkus;
 	public String random;
 	public String locationId;
@@ -63,7 +63,7 @@ class ProductInfo {
 
 	}
 
-	// ¸ù¾İ<a>µÄÊôĞÔ¼ÆËã»ñµÃ
+	// æ ¹æ®<a>çš„å±æ€§è®¡ç®—è·å¾—
 	public ProductInfo(String params) {
 		String[] ss = params.split("_");
 		venderId = ss[1];
@@ -77,19 +77,19 @@ class ProductInfo {
 				packId = ss[5];
 			}
 		}
-		// Éú³ÉµÄÄ¬ÈÏ
+		// ç”Ÿæˆçš„é»˜è®¤
 		outSkus = "";
 		random = String.valueOf(Math.random());
 		locationId = "1-0-0";
 	}
 }
 
-// ¿¼Á¿Ò»ÏÂÑéÖ¤ÂëµÄÎÊÌâ
+// è€ƒé‡ä¸€ä¸‹éªŒè¯ç çš„é—®é¢˜
 public class Jd_simulator extends Config{
 
-	// ³õÊ¼»¯Á¬½Ó×ÊÔ´
+	// åˆå§‹åŒ–è¿æ¥èµ„æº
 	private NetWork mnet;
-	// Í¨¹ıpid½øĞĞ²éÑ¯
+	// é€šè¿‡pidè¿›è¡ŒæŸ¥è¯¢
 	private HashMap<String, ProductInfo> map;
 
 	public Jd_simulator() {
@@ -107,7 +107,7 @@ public class Jd_simulator extends Config{
 		int state=1;
 	}
 	
-	//Õâ¸ö·½·¨¿ÉÒÔÔİÊ±²»Ê¹ÓÃ
+	//è¿™ä¸ªæ–¹æ³•å¯ä»¥æš‚æ—¶ä¸ä½¿ç”¨
 	public boolean isShowAuthCode(String uname)
 	{
 		try{
@@ -159,16 +159,16 @@ public class Jd_simulator extends Config{
 	}
 
 	
-    //¶ÔÓÚÇëÇóµÄ£¬¾¡Á¿Ö»ÊÇÇëÇóÒ»´Î
+    //å¯¹äºè¯·æ±‚çš„ï¼Œå°½é‡åªæ˜¯è¯·æ±‚ä¸€æ¬¡
 	public boolean Jd_login(String uname, String passwd) 
 	{
 		try{
 		 System.out.println("jd begin to login");
-		 //ÑéÖ¤ÂëµÄurl
+		 //éªŒè¯ç çš„url
 		 String authurl="";
 		 String uuid="";
 		 List<NameValuePair> nvps=new ArrayList<NameValuePair>();
-		 //Ê×ÏÈÊÇ»ñµÃÒ»Ğ©»ù±¾µÄĞÅÏ¢£¬ÕâĞ©¿ÉÄÜ»á¶à´ÎÀûÓÃ
+		 //é¦–å…ˆæ˜¯è·å¾—ä¸€äº›åŸºæœ¬çš„ä¿¡æ¯ï¼Œè¿™äº›å¯èƒ½ä¼šå¤šæ¬¡åˆ©ç”¨
 		 String loginurl="https://passport.jd.com/uc/login";
 		 HttpGet hg=new HttpGet(loginurl);
 		 Response resp1=mnet.execGet(hg);
@@ -212,7 +212,7 @@ public class Jd_simulator extends Config{
 				//System.out.println(name+":"+value);
 			    nvps.add(new BasicNameValuePair(name, value));
 			}
-			 //»ñµÃ±ØÒªµÄÊı¾İºó¿ªÊ¼post
+			 //è·å¾—å¿…è¦çš„æ•°æ®åå¼€å§‹post
 			 //post url
 			 String posturl="https://passport.jd.com/uc/loginService"
 			 +"?uuid="+uuid
@@ -235,8 +235,8 @@ public class Jd_simulator extends Config{
 				 }
 				 else if(content1.contains("empty"))
 				 {
-					 System.out.println("ĞèÒªÊäÈëÑéÖ¤Âë");
-					 VFrame fr=new VFrame(mnet,"jd",authurl+getTime(),"ÑéÖ¤Âë");
+					 System.out.println("éœ€è¦è¾“å…¥éªŒè¯ç ");
+					 VFrame fr=new VFrame(mnet,"jd",authurl+getTime(),"éªŒè¯ç ");
 					 String authcode=fr.getText();
 					 System.out.println(authcode);
 					 lp1=new ArrayList<NameValuePair>();
@@ -255,12 +255,12 @@ public class Jd_simulator extends Config{
 							 //System.out.println(content1);
 							 System.out.println("login success!");
 							 return true;
-						 }//ÑéÖ¤Âë´íÎóµÄÑ­»·ÖĞ
+						 }//éªŒè¯ç é”™è¯¯çš„å¾ªç¯ä¸­
 						 else{
 							 while(content1.contains("empty"))
 							 {
-								 System.out.println("ĞèÒªÖØĞÂÊäÈëÑéÖ¤Âë");
-								 fr=new VFrame(mnet,"jd",authurl+getTime(),"ÑéÖ¤Âë´íÎó");
+								 System.out.println("éœ€è¦é‡æ–°è¾“å…¥éªŒè¯ç ");
+								 fr=new VFrame(mnet,"jd",authurl+getTime(),"éªŒè¯ç é”™è¯¯");
 								 authcode=fr.getText();
 								 lp1=new ArrayList<NameValuePair>();
 								 lp1.addAll(nvps);
@@ -301,7 +301,7 @@ public class Jd_simulator extends Config{
 	}
 	
 	
-	//·µ»ØÌØ¶¨µÄresult,À´ËµÃ÷ÏàÓ¦µÄÇé¿ö
+	//è¿”å›ç‰¹å®šçš„result,æ¥è¯´æ˜ç›¸åº”çš„æƒ…å†µ
 	public Result getCart() {
 		System.out.println("jd begin to get cart");
 		Result result=new Result();
@@ -320,20 +320,20 @@ public class Jd_simulator extends Config{
 			{
 				String content = resp.getContent();
 				Parser parser = new Parser(content);
-				// Ê×ÏÈÊÇÓĞ<div class="cart-item-list"...ÕâÑùÒ»¸öparent
+				// é¦–å…ˆæ˜¯æœ‰<div class="cart-item-list"...è¿™æ ·ä¸€ä¸ªparent
 				NodeFilter ft1 = new TagNameFilter("div");
 				NodeFilter ft2 = new HasAttributeFilter("class",
 						"cart-item-list");
 				NodeFilter ft3 = new AndFilter(ft1, ft2);
 				NodeList formNodes = parser.extractAllNodesThatMatch(ft3);
-				// System.out.println("Ò»¹²ÓĞ"+formNodes.size()+"¸öcart-item");
-				// ¾ßÌåµÄÉÌÆ·µÄÊıÄ¿
+				// System.out.println("ä¸€å…±æœ‰"+formNodes.size()+"ä¸ªcart-item");
+				// å…·ä½“çš„å•†å“çš„æ•°ç›®
 				int kk = 0;
 				map.clear();
 				for (int i = 0; i < formNodes.size(); i++) {
-					// ÔÙÀûÓÃcart-item-list½øĞĞ¾ßÌåµÄ·ÖÎö
+					// å†åˆ©ç”¨cart-item-listè¿›è¡Œå…·ä½“çš„åˆ†æ
 					Node node = formNodes.elementAt(i);
-					// »¹ÒªÔÚ×öÒ»¸ö²ã´ÎµÄ½âÎöÅ¶
+					// è¿˜è¦åœ¨åšä¸€ä¸ªå±‚æ¬¡çš„è§£æå“¦
 					Parser ps1 = new Parser(node.toHtml());
 					NodeFilter ft4 = new TagNameFilter("div");
 					NodeFilter ft5 = new HasAttributeFilter("class","item-form");
@@ -358,7 +358,7 @@ public class Jd_simulator extends Config{
 					}
 				}
 				System.out.println("there are " + map.size() + " products!");
-				//ÖªµÀ¹ºÎï³µ³É¹¦µÄÌõ¼ş¾ÍÊÇÀïÃæÈ·ÊµÓĞÉÌÆ·µÄÊıÄ¿
+				//çŸ¥é“è´­ç‰©è½¦æˆåŠŸçš„æ¡ä»¶å°±æ˜¯é‡Œé¢ç¡®å®æœ‰å•†å“çš„æ•°ç›®
 				if(map.size()>0)
 				{
 					System.out.println("get cart success");
@@ -379,8 +379,8 @@ public class Jd_simulator extends Config{
 		return result;
 	}
 
-	// ¹ºÎï³µÌí¼Ó
-	// ·µ»ØresultËµÃ÷Çé¿ö
+	// è´­ç‰©è½¦æ·»åŠ 
+	// è¿”å›resultè¯´æ˜æƒ…å†µ
 	public Result addCart(String curl) {
 		System.out.println("jd begin to add cart");
 		Result result=new Result();
@@ -399,7 +399,7 @@ public class Jd_simulator extends Config{
 			Response rep=mnet.execGet(hg);
 			if (rep.getState()==0&&rep.getResp().getStatusLine().getStatusCode() == 200) {
 				String content=rep.getContent();
-				if(content.contains("³É¹¦¼ÓÈë¹ºÎï³µ"))
+				if(content.contains("æˆåŠŸåŠ å…¥è´­ç‰©è½¦"))
 				{
 					System.out.println("add success");
 					result.status=0;//8
@@ -419,8 +419,8 @@ public class Jd_simulator extends Config{
 		return result;
 	}
 	
-	//É¾³ı¹ºÎï³µ
-	//·µ»ØresultÀ´ËµÃ÷Çé¿ö
+	//åˆ é™¤è´­ç‰©è½¦
+	//è¿”å›resultæ¥è¯´æ˜æƒ…å†µ
 	public Result delCart(String curl)
 	{
 		System.out.println("jd begin to del cart");
@@ -455,7 +455,7 @@ public class Jd_simulator extends Config{
 		    {
 		    	map.remove(pid);
 		    	System.out.println("del cart success");
-		    	//½Ó×Å¾ÍÊÇ³É¹¦µÄÊ¤ÀûÏûÏ¢
+		    	//æ¥ç€å°±æ˜¯æˆåŠŸçš„èƒœåˆ©æ¶ˆæ¯
 		    	result.status=0;//8
 		    	result.filesize=resp.getFileSize();//9
 		    	result.duration=resp.getDuration();//10
@@ -489,8 +489,8 @@ public class Jd_simulator extends Config{
 	{
 		Jd_simulator js = new Jd_simulator();
 		js.setVpn(Result.vpn);
-		String uname = "keepcode";
-		String passwd = "123456..abc";
+		String uname = "*****";
+		String passwd = "*****";
 		String ip=Result.vpn.split("\\+")[1];
 		//record begin time
 		Log.getDateTime("Begin_time:");
