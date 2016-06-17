@@ -178,8 +178,8 @@ public class Yhd_simulator extends Config{
 		System.out.println("yhd begin to get cart");
 		String url="http://cart.yhd.com/cart/mod/newMainbody.do";
 		
-		/*String uname="ahzywq@163.com";
-		String pwd="123456";
+		/*String uname="*********";
+		String pwd="*******";
 		HttpGet login_hg=new HttpGet(url);
 		Response login_resp=mnet.execGet(login_hg);
 		String login_content=login_resp.getContent();
